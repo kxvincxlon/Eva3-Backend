@@ -1,0 +1,122 @@
+{% extends 'inventario/base.html' %}
+
+{% block title %}
+  Inicio - Sistema de Inventario CRUD
+{% endblock %}
+
+{% block header %}
+  ¡Bienvenido al Sistema de Inventario!
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-8">
+      <div class="jumbotron bg-primary text-white p-5 rounded-3 mb-4">
+        <div class="container-fluid py-3">
+          <h1 class="display-4 fw-bold">Sistema CRUD Django</h1>
+          <p class="fs-5">Sistema completo de inventario con operaciones Create, Read, Update y Delete (CRUD) implementado en Django con protección CSRF básica.</p>
+          <hr class="my-4" style="color: white;" />
+          <p class="lead">Gestiona tu inventario de productos de manera fácil y segura.</p>
+          <div class="d-grid gap-2 d-md-flex">
+            <a class="btn btn-warning btn-lg" href="{% url 'producto_list' %}" role="button"><i class="bi bi-box-seam me-2"></i>Ver Productos</a>
+            <a class="btn btn-success btn-lg" href="{% url 'producto_create' %}" role="button"><i class="bi bi-plus-circle me-2"></i>Crear Producto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Información del Sistema</h5>
+        </div>
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <img src="https://avatars.githubusercontent.com/u/51178433?v=4" alt="Profile Photo" class="rounded-circle img-fluid shadow" style="width: 150px; height: 150px; object-fit: cover; background-color: cornflowerblue;" />
+          </div>
+          <p>
+            <strong>Desarrollado por:</strong> SebaMorales74
+          </p>
+          <p>
+            <strong>Framework:</strong> Django 5.2.5
+          </p>
+          <p>
+            <strong>Clase:</strong> 04 & 05 - CRUD con Django
+          </p>
+          <p>
+            <strong>Fecha:</strong> 01 de Septiembre
+          </p>
+          <hr />
+          <p class="text-muted small mb-0">
+            <i class="bi bi-shield-check text-success me-1"></i>
+            Sistema con protección CSRF implementada
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h2>Funcionalidades del Sistema</h2>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card text-center h-100">
+            <div class="card-body">
+              <i class="bi bi-plus-circle text-success display-4 mb-3"></i>
+              <h5 class="card-title">Crear</h5>
+              <p class="card-text">Agrega nuevos productos al inventario con todos sus detalles.</p>
+              <a href="{% url 'producto_create' %}" class="btn btn-outline-success"><i class="bi bi-plus me-1"></i>Crear</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center h-100">
+            <div class="card-body">
+              <i class="bi bi-eye text-primary display-4 mb-3"></i>
+              <h5 class="card-title">Leer</h5>
+              <p class="card-text">Consulta y visualiza la información de todos los productos.</p>
+              <a href="{% url 'producto_list' %}" class="btn btn-outline-primary"><i class="bi bi-list me-1"></i>Listar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center h-100">
+            <div class="card-body">
+              <i class="bi bi-pencil text-warning display-4 mb-3"></i>
+              <h5 class="card-title">Actualizar</h5>
+              <p class="card-text">Modifica la información de productos existentes.</p>
+              <a href="{% url 'producto_list' %}" class="btn btn-outline-warning"><i class="bi bi-pencil me-1"></i>Editar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card text-center h-100">
+            <div class="card-body">
+              <i class="bi bi-trash text-danger display-4 mb-3"></i>
+              <h5 class="card-title">Eliminar</h5>
+              <p class="card-text">Elimina productos del inventario de forma segura.</p>
+              <a href="{% url 'producto_list' %}" class="btn btn-outline-danger"><i class="bi bi-trash me-1"></i>Eliminar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading"><i class="bi bi-shield-check me-2"></i>Seguridad CSRF Implementada</h4>
+        <p>Este sistema implementa protección CSRF (Cross-Site Request Forgery) en todas las operaciones que modifican datos (crear, actualizar, eliminar). Esto garantiza que las peticiones maliciosas desde otros sitios web no puedan realizar operaciones no autorizadas.</p>
+        <hr />
+        <p>Recuerda revisar esto y más en el ambiente de aprendizaje para comprender los fundamentos para hacer tu primer crud en Django.</p>
+        <a target="_blank" href="https://portal.inacap.cl/estudiantes" class="btn btn-danger" style="display: flex; flex-direction: row; justify-content: center; 	
+place-items: center; gap: 0.5rem;">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAAyCAYAAAAZUZThAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo3REVCQ0VBQ0JGNkQxMUU0Qjg0OUNBNjA0MDlBQ0I5OCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo3REVCQ0VBREJGNkQxMUU0Qjg0OUNBNjA0MDlBQ0I5OCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjdERUJDRUFBQkY2RDExRTRCODQ5Q0E2MDQwOUFDQjk4IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjdERUJDRUFCQkY2RDExRTRCODQ5Q0E2MDQwOUFDQjk4Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+dxDQHQAAA3lJREFUeNrsnU1IVFEYhu9U9jeKTKVtpF8hKCsNwQwXpouIDISoFgVthFZFi5ZtoqBVizZtWgQtalW4KVwE2Y9oLaIIIotiWpSZpRM5JRVN38Fv6OtyZ+44zRh0nwceuM6953h0zjvnfPdKxTKZjAcAwczhVwBAQAAICAABASAgAAQEgIAAEBAAAgJAQACAgAAQEAACAkBAAP4R8yL4M5fi7/tjTB1WEAACwq8AgIAAEBAAivTZZUz8oscrAorzSrE+oN2U+EH1s1qsztFmVJwIGdN8cbm4xDeeYfGrjqcyoJ079078FHBuvfZrcTczxsU34s/IzgD3jzZEzJnQbdqlzOvZ19pD2r8Se3zfvzekzUOxI2DcbWKfOJWjXaNe1x/S/5DY6us7mef6cfGcWBXBucIWq8y41eKCuHsGbZrEPnGDeW2/eFvcIS74yzG1iDfFNQVenxCPinfEODUIFEu/Tm5nh3jVnNtnjg/opLPWiM3ioF5TIfbo8ULxvHmvBsQ94lbz/Zp0i+XoCui/VoPxWK9ZLB7K8XO4cTSIreJhs01sFI9Tg0CxuL39I/N1TCeyo868njbHcQ3DD/GleFEnZnb1cbRrveH4qKtIOs84Jn01knuPv4vPxUviWT1Xn6O9G0dKj4fEz+Jl/XqveJKAQCkY94UlyzbxjH6iF7JdshN5ICQcjk7xtLgloPD2fOEshHvmeB0rCJSTGq0vqoq9pxJyfqV4vQR1iuVblOcLNcjs0mnC8VoLcVsrBBXzSV8BX5Gn/50mHM/0E9/2f7CIMTeY41ECAuXEbmvGdBKnjJMBbW5p7eFwz2KuaYG+KKR/9/ziha//dIHjnKuBajE1i6erE1ssKBuDuk1yNUmzhsQ+iAt6wOcm9RFTKHepftzqcte3Wr0X35qtWXUBY5zIU1OdYgWBcvJUPGb29e7u1EZxs7o2R7srun16EtL/A/GEN31XzLFM3GT6X1XEmF14b+jNhWTU3rBYBP/7g+4ZXHtfHNHjXWb/32smYJsej+j1nvm03q7H7lmCvRu01Jt+rpCvWPf3l6VOg5QI2Ipl/4ykVgMRL7D/pBb4ntYpaQ2Z29oNe3/ekSMgEDlsQBLe7+cgkYctFgABAWCLBcAKAkBAAAgIAAEBICAABASAgAAAAQEgIAAEBICAABAQAAICQEAA/ht+CTAAhQMcKH3WFrcAAAAASUVORK5CYII=" alt="INACAP" />
+          <span style="font-weight: 600;">Ir al ambiente de aprendizaje</span>
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

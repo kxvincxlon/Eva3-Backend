@@ -1,0 +1,140 @@
+{% extends 'inventario/base.html' %}
+
+{% block title %}Eliminar {{ object.nombre }} - Inventario CRUD{% endblock %}
+
+{% block header %}Confirmar Eliminación{% endblock %}
+
+{% block breadcrumb %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'inicio' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'producto_list' %}">Productos</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'producto_detail' object.pk %}">{{ object.nombre }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Eliminar</li>
+    </ol>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Confirmar Eliminación
+                </h5>
+            </div>
+            <div class="card-body">
+                <!-- Información del producto a eliminar -->
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading">
+                        <i class="bi bi-trash me-2"></i>¿Estás seguro?
+                    </h4>
+                    <p>Estás a punto de eliminar el siguiente producto:</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Nombre:</strong> {{ object.nombre }}
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Precio:</strong> ${{ object.precio }}
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <strong>Stock:</strong> {{ object.stock }}
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <strong>Creado:</strong> {{ object.fecha_creacion|date:"d/m/Y" }}
+                        </div>
+                    </div>
+                    {% if object.descripcion %}
+                        <div class="mt-3">
+                            <strong>Descripción:</strong><br>
+                            <em>{{ object.descripcion|truncatewords:20 }}</em>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Advertencia sobre la eliminación -->
+                <div class="alert alert-danger" role="alert">
+                    <h6><i class="bi bi-exclamation-circle me-2"></i>Importante</h6>
+                    <ul class="mb-0">
+                        <li>Esta acción marcará el producto como <strong>inactivo</strong></li>
+                        <li>El producto no será visible en la lista de productos activos</li>
+                        <li>Los datos se conservarán en la base de datos para auditoría</li>
+                        <li>Esta acción no se puede deshacer fácilmente</li>
+                    </ul>
+                </div>
+
+                <!-- Formulario de confirmación -->
+                <form method="post" class="text-center">
+                    {% csrf_token %}
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{% url 'producto_detail' object.pk %}" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-arrow-left me-1"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-danger btn-lg">
+                            <i class="bi bi-trash me-1"></i>Sí, Eliminar Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Información adicional sobre la eliminación lógica -->
+        <div class="card mt-3">
+            <div class="card-body bg-light">
+                <h6 class="card-title">
+                    <i class="bi bi-info-circle text-primary me-2"></i>Sobre la Eliminación Lógica
+                </h6>
+                <p class="card-text small text-muted mb-2">
+                    <strong>Eliminación Segura:</strong> Este sistema utiliza eliminación lógica (soft delete) 
+                    en lugar de eliminación física de los datos.
+                </p>
+                <p class="card-text small text-muted mb-0">
+                    <strong>Beneficios:</strong> Permite recuperar datos accidentalmente eliminados y 
+                    mantiene la integridad referencial de la base de datos.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Confirmación adicional con JavaScript
+document.querySelector('form').addEventListener('submit', function(e) {
+    const confirmed = confirm(
+        `¿Estás completamente seguro de que deseas eliminar "${{{ object.nombre|escapejs }}"?\n\n` +
+        'Esta acción marcará el producto como inactivo y no se puede deshacer fácilmente.'
+    );
+    
+    if (!confirmed) {
+        e.preventDefault();
+        return false;
+    }
+    
+    // Deshabilitar el botón para evitar doble clic
+    const submitButton = document.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>Eliminando...';
+});
+
+// Teclas de acceso rápido
+document.addEventListener('keydown', function(e) {
+    // Escape para cancelar
+    if (e.key === 'Escape') {
+        window.location.href = '{% url "producto_detail" object.pk %}';
+    }
+    
+    // Enter para confirmar (solo si no hay otros elementos focalizados)
+    if (e.key === 'Enter' && document.activeElement.tagName.toLowerCase() !== 'button') {
+        const confirmed = confirm('¿Confirmas la eliminación del producto?');
+        if (confirmed) {
+            document.querySelector('form').submit();
+        }
+    }
+});
+</script>
+{% endblock %}
